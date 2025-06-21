@@ -10,12 +10,20 @@ class BookRemoteDatasource {
   BookRemoteDatasource(this.client);
 
   Future<List<BookModel>> fetchBooks() async {
-    try {
-      final response = await client.get(AppConstants.booksEndpoint);
-      final List<dynamic> data = response.data;
-      return data.map((json) => BookModel.fromJson(json)).toList();
-    } on dio.DioException catch (e) {
-      throw DioFailureException(e.message);
-    }
+  try {
+    print("Calling API...");
+    final response = await client.get(AppConstants.booksEndpoint);
+    print("API response received: ${response.data}");
+
+    final List<dynamic> data = response.data;
+    final books = data.map((json) => BookModel.fromJson(json)).toList();
+    print("Parsed books: ${books.length}");
+
+    return books;
+  } catch (e) {
+    print("API fetch failed: $e");
+    throw AppException("Failed to fetch books");
   }
+}
+
 }
