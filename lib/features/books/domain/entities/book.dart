@@ -4,6 +4,10 @@ class Book {
   final String author;
   final String? image;
 
-  Book({required this.id,required this.title,required this.author,this.image});
-
+  Book({
+    required this.id,
+    required this.title,
+    required this.author,
+    this.image,
+  });
 }
